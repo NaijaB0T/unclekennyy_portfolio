@@ -18,7 +18,7 @@ import Testimonials from '@/components/sections/Testimonials';
 import Awards from '@/components/sections/Awards';
 import Clients from '@/components/sections/Clients';
 import Facilities from '@/components/sections/Facilities';
-import Equipment from '@/components/sections/Equipment';
+import Equipment from '@/components/sections/AboutMe';
 import Contact from '@/components/sections/Contact';
 
 // Utils

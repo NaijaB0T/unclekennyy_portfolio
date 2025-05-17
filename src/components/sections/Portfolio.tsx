@@ -7,69 +7,167 @@ import { useTheme } from '@/components/utils/ThemeContext';
 import VideoPlayer from '@/components/utils/VideoPlayer';
 import CinematicImage from '@/components/utils/CinematicImage';
 
-// Sample portfolio projects
-const portfolioProjects = [
-  {
-    id: 1,
-    title: 'Music Video - "Rhythm & Soul"',
-    category: 'Music Video',
-    client: 'Artist Name',
-    videoSrc: '/Portfolio Assets/3248719579989418817_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_10.jpg',
-    description: 'A visually stunning music video that combines dynamic cinematography with emotional storytelling to complement the artist\'s unique sound.',
-    date: 'April 2024'
-  },
-  {
-    id: 2,
-    title: 'Commercial - "Premium Experience"',
-    category: 'Commercial',
-    client: 'Brand Name',
-    videoSrc: '/Portfolio Assets/3387492217913413308_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_11.jpg',
-    description: 'A high-end commercial production highlighting the luxury features and exceptional quality of our client\'s premium product line.',
-    date: 'March 2024'
-  },
-  {
-    id: 3,
-    title: 'Short Film - "Echoes"',
-    category: 'Short Film',
-    client: 'Independent Production',
-    videoSrc: '/Portfolio Assets/3477871000998156445_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_12.jpg',
-    description: 'An award-winning short film exploring themes of memory and identity through innovative visual techniques and powerful performances.',
-    date: 'February 2024'
-  },
-  {
-    id: 4,
-    title: 'Documentary - "Urban Chronicles"',
-    category: 'Documentary',
-    client: 'Streaming Platform',
-    videoSrc: '/Portfolio Assets/3488760505481504762_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_13.jpg',
-    description: 'A compelling documentary series capturing authentic stories from urban communities with a cinematic approach to real-life narratives.',
-    date: 'January 2024'
-  },
-  {
-    id: 5,
-    title: 'Fashion Campaign - "Timeless"',
-    category: 'Fashion',
-    client: 'Designer Brand',
-    videoSrc: '/Portfolio Assets/3577182225549447025_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_14.jpg',
-    description: 'A sophisticated fashion campaign that merges artistic vision with brand identity to showcase the designer\'s latest collection.',
-    date: 'December 2023'
-  },
-  {
-    id: 6,
-    title: 'Adventure Series - "Beyond Horizons"',
-    category: 'Series',
-    client: 'Travel Channel',
-    videoSrc: '/Portfolio Assets/3611898332520446914_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_1_cover.jpg',
-    description: 'An immersive travel series shot in remote locations worldwide, highlighting breathtaking landscapes and cultural experiences.',
-    date: 'November 2023'
-  },
-];
+// Helper function to organize and classify media assets
+const organizeMediaAssets = () => {
+  // Define project information
+  const projectInfo = {
+    '3221507813161477626': {
+      title: 'Fashion Campaign - "Elegance"',
+      category: 'Fashion',
+      client: 'Luxury Brand',
+      description: 'A visually striking fashion campaign showcasing elegance and style through creative cinematography and artistic direction.',
+      date: 'May 2024'
+    },
+    '3248719579989418817': {
+      title: 'Music Video - "Rhythm & Soul"',
+      category: 'Music Video',
+      client: 'Rising Artist',
+      description: 'A visually stunning music video that combines dynamic cinematography with emotional storytelling to complement the artist\'s unique sound.',
+      date: 'April 2024'
+    },
+    '3249481118199826346': {
+      title: 'Brand Campaign - "Innovation"',
+      category: 'Commercial',
+      client: 'Tech Company',
+      description: 'A sleek and modern brand campaign highlighting innovation and forward-thinking design through sophisticated visual storytelling.',
+      date: 'March 2024'
+    },
+    '3386748659635854057': {
+      title: 'Short Film - "Reflections"',
+      category: 'Short Film',
+      client: 'Independent Production',
+      description: 'An evocative short film exploring human connections and memories through poetic visual language and atmospheric cinematography.',
+      date: 'February 2024'
+    },
+    '3387492217913413308': {
+      title: 'Commercial - "Premium Experience"',
+      category: 'Commercial',
+      client: 'Lifestyle Brand',
+      description: 'A high-end commercial production highlighting the luxury features and exceptional quality of our client\'s premium product line.',
+      date: 'January 2024'
+    },
+    '3389741723890159116': {
+      title: 'Documentary - "Urban Stories"',
+      category: 'Documentary',
+      client: 'Cultural Institute',
+      description: 'A compelling documentary capturing authentic stories from urban communities with a cinematic approach to real-life narratives.',
+      date: 'December 2023'
+    },
+    '3445257413150794646': {
+      title: 'Series - "Moments"',
+      category: 'Series',
+      client: 'Streaming Platform',
+      description: 'An intimate series exploring significant life moments through carefully crafted visual storytelling and authentic performances.',
+      date: 'November 2023'
+    },
+    '3459857002977563149': {
+      title: 'Lifestyle Campaign - "Everyday Luxury"',
+      category: 'Commercial',
+      client: 'Premium Brand',
+      description: 'A sophisticated lifestyle campaign celebrating everyday luxury through elegant cinematography and authentic moments.',
+      date: 'October 2023'
+    },
+    '3463368896166477478': {
+      title: 'Music Video - "Beats & Visuals"',
+      category: 'Music Video',
+      client: 'Music Producer',
+      description: 'An innovative music video merging cutting-edge visual effects with rhythmic editing to create a mesmerizing audiovisual experience.',
+      date: 'September 2023'
+    },
+    '3477871000998156445': {
+      title: 'Short Film - "Echoes"',
+      category: 'Short Film',
+      client: 'Film Festival',
+      description: 'An award-winning short film exploring themes of memory and identity through innovative visual techniques and powerful performances.',
+      date: 'August 2023'
+    },
+    '3488760505481504762': {
+      title: 'Documentary - "Urban Chronicles"',
+      category: 'Documentary',
+      client: 'Media Network',
+      description: 'A documentary series capturing the pulse of urban environments through cinematic storytelling and authentic perspectives.',
+      date: 'July 2023'
+    },
+    '3574974151405107441': {
+      title: 'Campaign - "Natural Beauty"',
+      category: 'Commercial',
+      client: 'Cosmetics Brand',
+      description: 'A stunning beauty campaign celebrating natural elegance through soft cinematography and authentic emotional connection.',
+      date: 'June 2023'
+    },
+    '3577182225549447025': {
+      title: 'Fashion Campaign - "Timeless"',
+      category: 'Fashion',
+      client: 'Designer Brand',
+      description: 'A sophisticated fashion campaign that merges artistic vision with brand identity to showcase the designer\'s latest collection.',
+      date: 'May 2023'
+    },
+    '3577893803173237660': {
+      title: 'Product Launch - "Innovation"',
+      category: 'Commercial',
+      client: 'Technology Company',
+      description: 'A polished product launch video highlighting innovative features through sleek cinematography and dynamic visual storytelling.',
+      date: 'April 2023'
+    },
+    '3611898332520446914': {
+      title: 'Adventure Series - "Beyond Horizons"',
+      category: 'Series',
+      client: 'Travel Channel',
+      description: 'An immersive travel series shot in remote locations worldwide, highlighting breathtaking landscapes and cultural experiences.',
+      date: 'March 2023'
+    },
+    '3628041593085698121': {
+      title: 'Music Video - "Visual Rhythms"',
+      category: 'Music Video',
+      client: 'Recording Artist',
+      description: 'A creative music video that pushes visual boundaries while complementing the artist\'s musical expression through innovative cinematography.',
+      date: 'February 2023'
+    },
+    '3632937126791138218': {
+      title: 'Brand Story - "Heritage"',
+      category: 'Commercial',
+      client: 'Legacy Brand',
+      description: 'A brand story celebrating rich heritage and craftsmanship through cinematic storytelling and emotionally resonant visuals.',
+      date: 'January 2023'
+    },
+  };
+
+  // Initialize projects array
+  const projects = [];
+  
+  // Default kenny image to use as fallback for all thumbnails
+  const defaultKennyImage = '/Portfolio Assets/kenny_1_cover.jpg';
+  
+  // Loop through project IDs
+  Object.keys(projectInfo).forEach((projectId, index) => {
+    // Directly use Kenny images for thumbnails to ensure consistency
+    // This ensures thumbnails always load regardless of project media structure
+    const kennyImageIndex = (index % 14) + 1; // Cycle through Kenny images 1-14
+    const thumbnailPath = kennyImageIndex === 1 
+      ? '/Portfolio Assets/kenny_1_cover.jpg' 
+      : `/Portfolio Assets/kenny_${kennyImageIndex}.jpg`;
+    
+    const defaultVideoPath = `/Portfolio Assets/${projectId}_1.mp4`;
+    
+    // Create project object with all the info
+    projects.push({
+      id: index + 1,
+      uid: projectId,
+      title: projectInfo[projectId].title,
+      category: projectInfo[projectId].category,
+      client: projectInfo[projectId].client,
+      videoSrc: defaultVideoPath,
+      thumbnail: thumbnailPath, // Use Kenny images as reliable thumbnails
+      description: projectInfo[projectId].description,
+      date: projectInfo[projectId].date
+    });
+  });
+  
+  return projects;
+};
+
+// Generate portfolio projects using our helper function
+const portfolioProjects = organizeMediaAssets();
 
 // Categories for filter
 const categories = ['All', 'Music Video', 'Commercial', 'Short Film', 'Documentary', 'Fashion', 'Series'];
@@ -140,7 +238,7 @@ const Portfolio = () => {
           ))}
         </motion.div>
         
-        {/* Portfolio grid */}
+          {/* Portfolio grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, index) => (
             <motion.div
@@ -168,10 +266,13 @@ const Portfolio = () => {
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                <CinematicImage
+                <Image
                   src={project.thumbnail}
                   alt={project.title}
-                  className="w-full h-full"
+                  width={600}
+                  height={300}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority={true}
                 />
               )}
               
@@ -227,7 +328,7 @@ const Portfolio = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
@@ -235,9 +336,9 @@ const Portfolio = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className={`relative w-full max-w-4xl rounded-xl overflow-hidden ${
+              className={`relative w-full max-w-5xl rounded-xl overflow-hidden ${
                 theme === 'dark' ? 'bg-gray-900' : 'bg-white'
-              }`}
+              } max-h-[90vh] overflow-y-auto`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
@@ -250,7 +351,7 @@ const Portfolio = () => {
               
               {selectedProject && (
                 <div>
-                  {/* Video */}
+                  {/* Main Video */}
                   <div className="w-full aspect-video">
                     <VideoPlayer 
                       src={portfolioProjects.find(p => p.id === selectedProject)?.videoSrc || ''} 
@@ -288,6 +389,81 @@ const Portfolio = () => {
                     }`}>
                       {portfolioProjects.find(p => p.id === selectedProject)?.description}
                     </p>
+                    
+                    {/* Project Media Gallery */}
+                    <div className="mt-8 mb-6">
+                      <h4 className={`text-xl font-bold mb-4 ${
+                        theme === 'dark' ? 'text-white' : 'text-black'
+                      }`}>
+                        Project Media
+                      </h4>
+                      
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {/* Dynamically generate media thumbnails based on the project UID */}
+                        {(() => {
+                          const project = portfolioProjects.find(p => p.id === selectedProject);
+                          if (!project) return null;
+                          
+                          // Create an array of possible media indices (from 1 to max)
+                          const maxMediaIndex = 15; // Arbitrary upper limit
+                          const mediaIndices = Array.from({ length: maxMediaIndex }, (_, i) => i + 1);
+                          
+                          // Return the mapped gallery items
+                          return mediaIndices.map((index) => {
+                            // Determine if this is likely a video or image based on typical patterns
+                            const isLikelyVideo = index <= 7;
+                            const mediaType = isLikelyVideo ? 'video' : 'image';
+                            const mediaPath = `/Portfolio Assets/${project.uid}_${index}${isLikelyVideo ? '.mp4' : '.jpg'}`;
+                            const thumbnailPath = isLikelyVideo 
+                              ? `/Portfolio Assets/${project.uid}_${index}.jpg` // Video thumbnail
+                              : mediaPath; // For images, use the image itself
+                            
+                            return (
+                              <div 
+                                key={index} 
+                                className="relative aspect-video rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                                onClick={() => {
+                                  // If it's a video, we could implement a modal video player here
+                                  if (isLikelyVideo) {
+                                    window.open(mediaPath, '_blank');
+                                  } else {
+                                    // For images, we could implement a lightbox here
+                                    window.open(mediaPath, '_blank');
+                                  }
+                                }}
+                              >
+                                {isLikelyVideo && (
+                                  <>
+                                    <div className="absolute inset-0 bg-black opacity-30 hover:opacity-0 transition-opacity"></div>
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                      <span className="w-12 h-12 rounded-full bg-white bg-opacity-70 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </>
+                                )}
+                                <Image 
+                                  src={thumbnailPath}
+                                  alt={`Project media ${index}`}
+                                  width={320}
+                                  height={180}
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    // Safety check
+                                    if (!e.currentTarget || !e.currentTarget.parentElement) return;
+                                    
+                                    // If image doesn't exist, hide this element
+                                    e.currentTarget.parentElement.style.display = 'none';
+                                  }}
+                                />
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    </div>
                     
                     <div className={`flex justify-between items-center pt-4 border-t ${
                       theme === 'dark' ? 'border-gray-800' : 'border-gray-200'

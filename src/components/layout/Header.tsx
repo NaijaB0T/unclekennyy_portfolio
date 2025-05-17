@@ -136,7 +136,7 @@ const Header = () => {
                       initial="hidden"
                       animate="show"
                     >
-                      {['Services', 'Works', 'Process', 'Facilities', 'Equipment', 'Contact'].map((item, index) => (
+                      {['Services', 'Works', 'Process', 'Facilities', 'About', 'Contact'].map((item, index) => (
                         <motion.div
                           key={item}
                           variants={{

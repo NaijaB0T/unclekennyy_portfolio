@@ -10,38 +10,39 @@ const serviceData = [
     id: 1,
     title: 'Video Production',
     description: 'From concept to final cut, we create stunning video content that tells your story with impact. Our team handles every aspect of production with meticulous attention to detail.',
-    videoSrc: '/Portfolio Assets/3386748659635854057_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_10.jpg',
+    thumbnail: '/Portfolio Assets/kenny_1_cover.jpg',
   },
   {
     id: 2,
     title: 'Music Videos',
     description: 'We specialize in crafting visually compelling music videos that elevate artists and captivate audiences, combining creative direction with technical excellence.',
-    videoSrc: '/Portfolio Assets/3221507813161477626_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_10.jpg',
+    thumbnail: '/Portfolio Assets/kenny_2.jpg',
   },
   {
     id: 3,
     title: '3D & CGI',
     description: 'Our cutting-edge 3D and CGI capabilities allow us to create immersive visual experiences that blur the line between reality and imagination.',
-    videoSrc: '/Portfolio Assets/3459857002977563149_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_10.jpg',
+    thumbnail: '/Portfolio Assets/kenny_3.jpg',
   },
   {
     id: 4,
     title: 'Commercial Production',
     description: 'We create compelling commercial content that resonates with your target audience and drives measurable results for your brand.',
-    videoSrc: '/Portfolio Assets/3445257413150794646_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_10.jpg',
+    thumbnail: '/Portfolio Assets/kenny_4.jpg',
   },
   {
     id: 5,
     title: 'Photography',
     description: 'Our photography services capture the essence of your brand, product, or event with a distinct cinematic approach that sets your visuals apart.',
-    videoSrc: '/Portfolio Assets/3574974151405107441_1.mp4',
-    thumbnail: '/Portfolio Assets/kenny_10.jpg',
+    thumbnail: '/Portfolio Assets/kenny_5.jpg',
   }
-];
+].map(service => ({
+  ...service,
+  // Ensure thumbnail paths don't have any issues
+  thumbnail: service.thumbnail.startsWith('/') 
+    ? service.thumbnail 
+    : `/${service.thumbnail}`
+}));
 
 const Services = () => {
   const [activeService, setActiveService] = useState(serviceData[0]);
@@ -118,23 +119,11 @@ const Services = () => {
     }
   }, [activeService, currentDescription]);
   
-  // Load videos and start playing when service changes
+  // Effect for logging thumbnail paths to help with debugging
   useEffect(() => {
-    // Auto-play the active service's video when it changes
-    const activeCard = serviceCardsRef.current.find((_, index) => 
-      serviceData[index].id === activeService.id
-    );
-    
-    if (activeCard) {
-      const videoElement = activeCard.querySelector('video');
-      if (videoElement) {
-        videoElement.load();
-        videoElement.play().catch(err => {
-          console.log('Video autoplay failed:', err);
-        });
-      }
-    }
-  }, [activeService.id]);
+    // Log thumbnail paths to verify they are correct
+    console.log('Service thumbnails:', serviceData.map(s => s.thumbnail));
+  }, []);
   
   // Set references for service cards
   const setCardRef = (el: HTMLDivElement | null, index: number) => {
@@ -191,42 +180,31 @@ const Services = () => {
                 key={service.id}
                 ref={(el) => setCardRef(el, index)}
                 data-service-id={service.id}
-                className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer service-card ${
+                className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer service-card group ${
                   theme === 'dark' 
                     ? (activeService.id === service.id ? 'border-2 border-[#ff6d00] bg-[#111]' : 'border border-gray-800 bg-[#111]')
                     : (activeService.id === service.id ? 'border-2 border-[#ff6d00] bg-white' : 'border border-gray-300 bg-white')
                 }`}
                 onClick={() => setActiveService(service)}
               >
-                <div className="relative aspect-video overflow-hidden">
-                  {/* Use image as background first, with video as overlay */}
-                  <div className="absolute inset-0">
-                    <Image
-                      src={service.thumbnail}
-                      alt={service.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
+                <div className="relative aspect-video overflow-hidden bg-gray-900">
+                  {/* Static thumbnail image */}
+                  <img
+                    src={service.thumbnail}
+                    alt={service.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                      console.error(`Failed to load image: ${service.thumbnail}`);
+                      e.target.style.display = 'none';
+                    }}
+                  />
                   
-                  {service.videoSrc.endsWith('.mp4') && (
-                    <div className="absolute inset-0">
-                      <video 
-                        className="w-full h-full object-cover"
-                        poster={service.thumbnail}
-                        autoPlay={activeService.id === service.id}
-                        loop
-                        muted
-                        playsInline
-                        preload="metadata"
-                        style={{ opacity: activeService.id === service.id ? 1 : 0 }}
-                      >
-                        <source src={service.videoSrc} type="video/mp4" />
-                      </video>
+                  {/* Title overlay for visual appeal */}
+                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                    <div className="p-4 bg-black bg-opacity-70 rounded">
+                      <h4 className="text-white text-lg font-bold text-center">{service.title}</h4>
                     </div>
-                  )}
-                  
-                  <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>

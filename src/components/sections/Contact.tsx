@@ -1,35 +1,9 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTheme } from '@/components/utils/ThemeContext';
-
-// Simple map placeholder component
-const MapPlaceholder = () => {
-  const { theme } = useTheme();
-  
-  return (
-    <div 
-      className={`h-72 rounded-xl overflow-hidden mb-8 flex items-center justify-center ${
-        theme === 'dark' ? 'bg-gray-100 text-black' : 'bg-gray-900 text-white'
-      }`}
-    >
-      <div className="text-center p-6">
-        <div className="text-4xl mb-4">📍</div>
-        <h3 className="text-xl font-bold mb-2">UNCLE KENNY STUDIOS</h3>
-        <p>Victoria Island, Lagos, Nigeria</p>
-        <a 
-          href="https://www.google.com/maps?q=victoria+island,lagos,nigeria" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="inline-block mt-4 px-4 py-2 bg-[#ff6d00] text-white rounded-lg"
-        >
-          Open in Google Maps
-        </a>
-      </div>
-    </div>
-  );
-};
+import OpenStreetMap from '@/components/utils/OpenStreetMap';
 
 const Contact = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -211,7 +185,14 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             {/* Map */}
-            <MapPlaceholder />
+            <div className="mb-8 rounded-xl overflow-hidden h-72">
+              <OpenStreetMap 
+                latitude={6.4281} 
+                longitude={3.4219} 
+                zoom={14}
+                className="h-72"
+              />
+            </div>
             
             {/* Contact Info */}
             <div className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-gray-100' : 'bg-gray-900'}`}>

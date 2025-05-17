@@ -11,30 +11,35 @@ const serviceData = [
     title: 'Video Production',
     description: 'From concept to final cut, we create stunning video content that tells your story with impact. Our team handles every aspect of production with meticulous attention to detail.',
     videoSrc: '/Portfolio Assets/3386748659635854057_1.mp4',
+    thumbnail: '/Portfolio Assets/kenny_10.jpg',
   },
   {
     id: 2,
     title: 'Music Videos',
     description: 'We specialize in crafting visually compelling music videos that elevate artists and captivate audiences, combining creative direction with technical excellence.',
     videoSrc: '/Portfolio Assets/3221507813161477626_1.mp4',
+    thumbnail: '/Portfolio Assets/kenny_10.jpg',
   },
   {
     id: 3,
     title: '3D & CGI',
     description: 'Our cutting-edge 3D and CGI capabilities allow us to create immersive visual experiences that blur the line between reality and imagination.',
     videoSrc: '/Portfolio Assets/3459857002977563149_1.mp4',
+    thumbnail: '/Portfolio Assets/kenny_10.jpg',
   },
   {
     id: 4,
     title: 'Commercial Production',
     description: 'We create compelling commercial content that resonates with your target audience and drives measurable results for your brand.',
     videoSrc: '/Portfolio Assets/3445257413150794646_1.mp4',
+    thumbnail: '/Portfolio Assets/kenny_10.jpg',
   },
   {
     id: 5,
     title: 'Photography',
     description: 'Our photography services capture the essence of your brand, product, or event with a distinct cinematic approach that sets your visuals apart.',
     videoSrc: '/Portfolio Assets/3574974151405107441_1.mp4',
+    thumbnail: '/Portfolio Assets/kenny_10.jpg',
   }
 ];
 
@@ -47,6 +52,14 @@ const Services = () => {
   
   // IntersectionObserver for card reveal animations and description updates
   useEffect(() => {
+    // Make sure all service cards are visible by default
+    serviceCardsRef.current.forEach((card, index) => {
+      if (card) {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }
+    });
+
     const observerOptions = {
       root: null,
       rootMargin: '-30% 0px -30% 0px', // Adjust to detect when card is centered in viewport
@@ -57,10 +70,6 @@ const Services = () => {
       entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           const cardElement = entry.target as HTMLElement;
-          
-          // Animate card
-          cardElement.style.opacity = '1';
-          cardElement.style.transform = 'translateY(0)';
           
           // If it's a service card, update the active service
           const serviceId = cardElement.dataset.serviceId;
@@ -108,6 +117,24 @@ const Services = () => {
       return () => clearTimeout(timeout);
     }
   }, [activeService, currentDescription]);
+  
+  // Load videos and start playing when service changes
+  useEffect(() => {
+    // Auto-play the active service's video when it changes
+    const activeCard = serviceCardsRef.current.find((_, index) => 
+      serviceData[index].id === activeService.id
+    );
+    
+    if (activeCard) {
+      const videoElement = activeCard.querySelector('video');
+      if (videoElement) {
+        videoElement.load();
+        videoElement.play().catch(err => {
+          console.log('Video autoplay failed:', err);
+        });
+      }
+    }
+  }, [activeService.id]);
   
   // Set references for service cards
   const setCardRef = (el: HTMLDivElement | null, index: number) => {
@@ -164,41 +191,41 @@ const Services = () => {
                 key={service.id}
                 ref={(el) => setCardRef(el, index)}
                 data-service-id={service.id}
-                className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer ${
+                className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer service-card ${
                   theme === 'dark' 
                     ? (activeService.id === service.id ? 'border-2 border-[#ff6d00] bg-[#111]' : 'border border-gray-800 bg-[#111]')
                     : (activeService.id === service.id ? 'border-2 border-[#ff6d00] bg-white' : 'border border-gray-300 bg-white')
                 }`}
                 onClick={() => setActiveService(service)}
-                style={{
-                  opacity: 0,
-                  transform: 'translateY(20px)',
-                  transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
-                  transitionDelay: `${index * 0.1}s`,
-                }}
               >
                 <div className="relative aspect-video overflow-hidden">
-                  {service.videoSrc.endsWith('.mp4') ? (
-                    <video 
-                      className="w-full h-full object-cover"
-                      autoPlay={activeService.id === service.id}
-                      loop
-                      muted
-                      playsInline
-                    >
-                      <source src={service.videoSrc} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <div className="relative h-full w-full">
-                      <Image
-                        src={service.videoSrc}
-                        alt={service.title}
-                        fill
-                        className="object-cover ken-burns-effect"
-                      />
+                  {/* Use image as background first, with video as overlay */}
+                  <div className="absolute inset-0">
+                    <Image
+                      src={service.thumbnail}
+                      alt={service.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  
+                  {service.videoSrc.endsWith('.mp4') && (
+                    <div className="absolute inset-0">
+                      <video 
+                        className="w-full h-full object-cover"
+                        poster={service.thumbnail}
+                        autoPlay={activeService.id === service.id}
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                        style={{ opacity: activeService.id === service.id ? 1 : 0 }}
+                      >
+                        <source src={service.videoSrc} type="video/mp4" />
+                      </video>
                     </div>
                   )}
+                  
                   <div className="absolute inset-0 bg-black bg-opacity-30"></div>
                 </div>
                 <div className="p-6">

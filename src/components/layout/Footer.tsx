@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/components/utils/ThemeContext';
+import OpenStreetMap from '@/components/utils/OpenStreetMap';
 
 const Footer = () => {
   const { theme } = useTheme();
@@ -97,12 +98,12 @@ const Footer = () => {
               </button>
             </div>
             <div className="w-full h-full rounded-lg overflow-hidden relative mt-12">
-              <p className="absolute bottom-4 left-4 text-xs text-white z-10 bg-black bg-opacity-50 px-2 py-1 rounded">
-                Use ctrl + scroll to zoom the map
-              </p>
-              <div className={`w-full h-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'} flex items-center justify-center`}>
-                <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Google Map would be embedded here</p>
-              </div>
+              <OpenStreetMap
+                latitude={6.4281}
+                longitude={3.4219}
+                zoom={15}
+                className="w-full h-full"
+              />
             </div>
           </motion.div>
         </div>

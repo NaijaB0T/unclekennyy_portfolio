@@ -1,4 +1,6 @@
-# Exclude Next.js build cache
-.next/cache/**
-cache/**
-.vercel/**
+.git
+node_modules
+.next
+.wrangler
+.vscode
+*.log

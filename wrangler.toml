@@ -1,7 +1,23 @@
-# Cloudflare Pages configuration
-pages_build_output_dir = "."
+name = "unclekennyy-portfolio"
+compatibility_date = "2023-10-30"
+compatibility_flags = []
 
-[build.environment]
+# Build configuration
+[build]
+command = "npm run build"
+output_dir = "out"
+cwd = "."
+
+# Environment variables
+[vars]
 NODE_VERSION = "18"
 
+# Define production environment
+[env.production]
+routes = [
+  { pattern = "/*", zone_name = "unclekennyy-portfolio.pages.dev" }
+]
 
+# Specify assets serving behavior
+[site]
+bucket = "./out"

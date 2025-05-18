@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 import { useTheme } from '@/components/utils/ThemeContext';
 
 const facilities = [
@@ -109,11 +108,10 @@ const Facilities = () => {
                       Your browser does not support the video tag.
                     </video>
                   ) : (
-                    <Image
+                    <img
                       src={facility.imageSrc}
                       alt={facility.title}
-                      fill
-                      className="object-cover"
+                      className="w-full h-full object-cover"
                     />
                   )}
                   <div className="absolute inset-0 bg-black bg-opacity-70 p-6 flex flex-col justify-end">

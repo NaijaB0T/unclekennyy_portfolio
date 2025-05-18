@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 
 // Kenny's photos for the slideshow
 const kennyPhotos = [
@@ -80,21 +79,19 @@ const AboutMe = () => {
           >
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
               {kennyPhotos.map((photo, index) => (
-                <div
-                  key={photo.id}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                  }`}
-                >
-                  <Image
-                    src={photo.path}
-                    alt={`Kenny - Cinematographer`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                    priority={index === 0}
-                  />
-                </div>
+                  <div
+                    key={photo.id}
+                    className={`absolute inset-0 transition-opacity duration-1000 ${
+                      index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                    }`}
+                  >
+                    <img
+                      src={photo.path}
+                      alt={`Kenny - Cinematographer`}
+                      className="w-full h-full object-cover"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                  </div>
               ))}
               
               {/* Slideshow navigation dots */}

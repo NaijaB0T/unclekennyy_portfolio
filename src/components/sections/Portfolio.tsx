@@ -2,9 +2,10 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import Image from 'next/image';
 import { useTheme } from '@/components/utils/ThemeContext';
 import VideoPlayer from '@/components/utils/VideoPlayer';
+
+// Note: Removed the Image import from next/image
 
 // Helper function to organize and classify media assets
 const organizeMediaAssets = () => {
@@ -272,13 +273,11 @@ const Portfolio = () => {
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                <Image
+                <img
                   src={project.thumbnail}
                   alt={project.title}
-                  width={600}
-                  height={300}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  priority={true}
+                  loading="lazy"
                 />
               )}
               
@@ -449,11 +448,9 @@ const Portfolio = () => {
                                     </div>
                                   </>
                                 )}
-                                <Image 
+                                <img 
                                   src={thumbnailPath}
                                   alt={`Project media ${i}`}
-                                  width={320}
-                                  height={180}
                                   className="w-full h-full object-cover"
                                   onError={(e) => {
                                     // Safety check

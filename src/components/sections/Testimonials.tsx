@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { useTheme } from '@/components/utils/ThemeContext';
 import { FaQuoteLeft, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
@@ -154,11 +153,10 @@ const Testimonials = () => {
             >
               {/* Image */}
               <div className="relative h-[300px] md:h-full rounded-xl overflow-hidden order-2 md:order-1">
-                <Image
+                <img
                   src={testimonials[currentIndex].image}
                   alt={testimonials[currentIndex].name}
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
               </div>

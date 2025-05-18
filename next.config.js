@@ -10,9 +10,12 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  // Configure images for static export
+  // Configure images for static export - IMPORTANT for Cloudflare deployment
   images: {
     unoptimized: true, // This disables the /_next/image URLs and uses direct image paths
+    domains: ['localhost'],
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [],
   },
   // Explicitly configure webpack
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {

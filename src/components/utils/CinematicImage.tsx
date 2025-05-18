@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 interface CinematicImageProps {
@@ -45,13 +44,11 @@ const CinematicImage = ({
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="w-full h-full"
       >
-        <Image
+        <img
           src={src}
           alt={alt}
-          fill
-          priority={priority}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className={`object-cover ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+          loading={priority ? "eager" : "lazy"}
+          className={`object-cover w-full h-full ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
           onLoad={() => setIsLoaded(true)}
         />
       </motion.div>

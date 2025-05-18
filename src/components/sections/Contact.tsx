@@ -51,7 +51,7 @@ const Contact = () => {
           transition={{ duration: 0.8 }}
           className="text-3xl lg:text-4xl font-bold mb-12 text-center max-w-3xl mx-auto"
         >
-          Thinking big? Connect with us and let's create <span className="text-[#ff6d00]">wonders</span>!
+          Thinking big? Connect with us and let&apos;s create <span className="text-[#ff6d00]">wonders</span>!
         </motion.h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">

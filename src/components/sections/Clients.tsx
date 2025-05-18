@@ -37,7 +37,7 @@ const Clients = () => {
               Our <span className="text-[#ff6d00]">Clients</span>: Our Success. From <span className="text-[#ff6d00]">startups</span> to industry <span className="text-[#ff6d00]">leaders</span>, we help brands tell their stories and connect with their audience.
             </p>
             <a href="#contact" className="text-[#ff6d00] inline-flex items-center hover:underline">
-              LET'S CREATE →
+              LET&apos;S CREATE →
             </a>
           </motion.div>
         </div>

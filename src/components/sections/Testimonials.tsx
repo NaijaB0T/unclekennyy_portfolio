@@ -170,7 +170,7 @@ const Testimonials = () => {
                 }`} />
                 
                 <p className={`text-lg italic mb-8 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                  "{testimonials[currentIndex].quote}"
+                  &quot;{testimonials[currentIndex].quote}&quot;
                 </p>
                 
                 <div>

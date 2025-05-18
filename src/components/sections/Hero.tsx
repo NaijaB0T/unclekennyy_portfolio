@@ -5,13 +5,13 @@ import { useTheme } from '@/components/utils/ThemeContext';
 
 const services = [
   { title: "MUSIC VIDEOS", color: "gold" },
-  { title: "3D & CGI", color: "green" },
-  { title: "COMMERCIALS", color: "blue" }
+  { title: "FILMS", color: "green" },
+  { title: "COMMERCIALS", color: "blue" },
+  { title: "TV SERIES", color: "red" }
 ];
 
 const Hero = () => {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const { theme } = useTheme();
   const textRef = useRef<HTMLDivElement>(null);
   const footerLeftRef = useRef<HTMLDivElement>(null);
@@ -49,8 +49,6 @@ const Hero = () => {
   useEffect(() => {
     // Track scroll for text animation
     const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-      
       // Hide footer hints when scrolling down
       if (window.scrollY > window.innerHeight * 0.3) {
         setFooterHintsVisible(false);
@@ -87,8 +85,10 @@ const Hero = () => {
         return 'bg-gradient-to-r from-[#0c8461] via-[#0fb17d] to-[#0c8461]';
       case 'blue':
         return 'bg-gradient-to-r from-[#0a3573] via-[#1956b5] to-[#0a3573]';
+      case 'red': // <-- Added red case
+        return 'bg-gradient-to-r from-[#B91C1C] via-[#EF4444] to-[#B91C1C]';
       default:
-        return 'bg-gradient-to-r from-[#d6a83c] via-[#f2d377] to-[#d6a83c]';
+        return 'bg-gradient-to-r from-[#d6a83c] via-[#f2d377] to-[#d6a83c]'; // Or choose a different default if preferred
     }
   };
 
@@ -110,7 +110,7 @@ const Hero = () => {
       <div className="relative z-10 container mx-auto px-6 flex flex-col items-center">
         <div
           ref={textRef}
-          className={`text-5xl md:text-7xl font-bold mb-8 text-center ${
+          className={`text-7xl md:text-9xl font-bold mb-8 text-center ${
             theme === 'dark' ? 'text-white' : 'text-black'
           }`}
           style={{
@@ -118,7 +118,7 @@ const Hero = () => {
             transition: 'opacity 0.3s ease-out',
           }}
         >
-          WE CREATE
+          I SHOOT
         </div>
         
         <div 
@@ -168,7 +168,7 @@ const Hero = () => {
             transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
           }}
         >
-          UNCLE KENNY STUDIOS
+          UNCLE KENNY
         </div>
         <div 
           ref={footerRightRef}

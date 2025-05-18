@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/components/utils/ThemeContext';
 import OpenStreetMap from '@/components/utils/OpenStreetMap';

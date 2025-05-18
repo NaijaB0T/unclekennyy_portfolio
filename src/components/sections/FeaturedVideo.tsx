@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { useInView } from 'framer-motion';
 import VideoPlayer from '@/components/utils/VideoPlayer';
 import { useTheme } from '@/components/utils/ThemeContext';
 import gsap from 'gsap';
@@ -12,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 const FeaturedVideo = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const { theme } = useTheme();
   
   useEffect(() => {
@@ -73,7 +71,7 @@ const FeaturedVideo = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <h3 className={`text-2xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                "Essence" - Brand Campaign
+                &quot;Essence&quot; - Brand Campaign
               </h3>
               <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                 Client: Luxury Fashion Brand

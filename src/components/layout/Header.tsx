@@ -58,7 +58,7 @@ const Header = () => {
             <span className="text-xs tracking-widest mr-1">THE</span>
             <span className={theme === 'dark' ? 'text-white' : 'text-black'}>UNCLE</span>
             <span className="text-[#ff6d00]">KENNY</span>
-            <span className="block text-xs tracking-widest text-right">STUDIOS</span>
+            <span className="block text-xs tracking-widest text-right">Cinematographer</span>
           </Link>
         </motion.div>
 
@@ -136,7 +136,7 @@ const Header = () => {
                       initial="hidden"
                       animate="show"
                     >
-                      {['Services', 'Works', 'Process', 'Facilities', 'About', 'Contact'].map((item, index) => (
+                      {['Services', 'Works', 'Process', 'Facilities', 'About', 'Contact'].map((item) => (
                         <motion.div
                           key={item}
                           variants={{

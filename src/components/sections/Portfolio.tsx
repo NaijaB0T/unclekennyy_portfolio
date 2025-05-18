@@ -5,7 +5,6 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from '@/components/utils/ThemeContext';
 import VideoPlayer from '@/components/utils/VideoPlayer';
-import CinematicImage from '@/components/utils/CinematicImage';
 
 // Helper function to organize and classify media assets
 const organizeMediaAssets = () => {
@@ -133,10 +132,17 @@ const organizeMediaAssets = () => {
   };
 
   // Initialize projects array
-  const projects = [];
-  
-  // Default kenny image to use as fallback for all thumbnails
-  const defaultKennyImage = '/Portfolio Assets/kenny_1_cover.jpg';
+  const projects: {
+    id: number;
+    uid: string;
+    title: string;
+    category: string;
+    client: string;
+    videoSrc: string;
+    thumbnail: string;
+    description: string;
+    date: string;
+  }[] = [];
   
   // Loop through project IDs
   Object.keys(projectInfo).forEach((projectId, index) => {
@@ -409,18 +415,17 @@ const Portfolio = () => {
                           const mediaIndices = Array.from({ length: maxMediaIndex }, (_, i) => i + 1);
                           
                           // Return the mapped gallery items
-                          return mediaIndices.map((index) => {
+                          return mediaIndices.map((i) => {
                             // Determine if this is likely a video or image based on typical patterns
-                            const isLikelyVideo = index <= 7;
-                            const mediaType = isLikelyVideo ? 'video' : 'image';
-                            const mediaPath = `/Portfolio Assets/${project.uid}_${index}${isLikelyVideo ? '.mp4' : '.jpg'}`;
+                            const isLikelyVideo = i <= 7;
+                            const mediaPath = `/Portfolio Assets/${project.uid}_${i}${isLikelyVideo ? '.mp4' : '.jpg'}`;
                             const thumbnailPath = isLikelyVideo 
-                              ? `/Portfolio Assets/${project.uid}_${index}.jpg` // Video thumbnail
+                              ? `/Portfolio Assets/${project.uid}_${i}.jpg` // Video thumbnail
                               : mediaPath; // For images, use the image itself
                             
                             return (
                               <div 
-                                key={index} 
+                                key={i} 
                                 className="relative aspect-video rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
                                 onClick={() => {
                                   // If it's a video, we could implement a modal video player here
@@ -446,7 +451,7 @@ const Portfolio = () => {
                                 )}
                                 <Image 
                                   src={thumbnailPath}
-                                  alt={`Project media ${index}`}
+                                  alt={`Project media ${i}`}
                                   width={320}
                                   height={180}
                                   className="w-full h-full object-cover"

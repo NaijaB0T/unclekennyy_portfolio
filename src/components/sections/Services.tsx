@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import { useTheme } from '@/components/utils/ThemeContext';
 
 // Define services data
@@ -123,7 +122,7 @@ const Services = () => {
   useEffect(() => {
     // Log thumbnail paths to verify they are correct
     console.log('Service thumbnails:', serviceData.map(s => s.thumbnail));
-  }, []);
+  }, [activeService.id]);
   
   // Set references for service cards
   const setCardRef = (el: HTMLDivElement | null, index: number) => {
@@ -175,10 +174,10 @@ const Services = () => {
           
           {/* Right column (scrollable cards) */}
           <div className="space-y-8">
-            {serviceData.map((service, index) => (
+            {serviceData.map((service, serviceIndex) => (
               <div
                 key={service.id}
-                ref={(el) => setCardRef(el, index)}
+                ref={(el) => setCardRef(el, serviceIndex)}
                 data-service-id={service.id}
                 className={`rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer service-card group ${
                   theme === 'dark' 
@@ -189,6 +188,7 @@ const Services = () => {
               >
                 <div className="relative aspect-video overflow-hidden bg-gray-900">
                   {/* Static thumbnail image */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={service.thumbnail}
                     alt={service.title}

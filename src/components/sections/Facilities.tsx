@@ -59,7 +59,7 @@ const Facilities = () => {
               UncleKenny Studios offers world-class facilities designed to bring your creative vision to life. Our spaces combine cutting-edge technology with comfortable, inspiring environments.
             </p>
             <p className={`${theme === 'dark' ? 'text-black' : 'text-white'} text-lg`}>
-              Whether you're recording music, shooting a video, or conducting a photoshoot, our facilities provide everything you need for a successful production.
+              Whether you&apos;re recording music, shooting a video, or conducting a photoshoot, our facilities provide everything you need for a successful production.
             </p>
           </motion.div>
         </div>

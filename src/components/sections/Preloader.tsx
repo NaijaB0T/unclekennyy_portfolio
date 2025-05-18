@@ -48,7 +48,7 @@ const Preloader = ({ onLoadingComplete }: PreloaderProps) => {
             <div className="relative">
               <span className="text-xs tracking-widest mb-1 block text-gray-400">THE</span>
               <span className="text-white text-4xl font-bold">UNCLE<span className="text-[#ff6d00]">KENNY</span></span>
-              <span className="text-xs tracking-widest block mt-1 text-gray-400 text-right">STUDIOS</span>
+              <span className="text-xs tracking-widest block mt-1 text-gray-400 text-right">Cinematographer</span>
             </div>
           </motion.div>
           

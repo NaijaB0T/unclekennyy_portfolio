@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
-import { useTheme } from '@/components/utils/ThemeContext';
 
 // Kenny's photos for the slideshow
 const kennyPhotos = [
@@ -25,10 +24,8 @@ const kennyPhotos = [
 
 const AboutMe = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const slideshowRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { theme } = useTheme();
 
   // Auto-advance slideshow
   useEffect(() => {
@@ -58,7 +55,7 @@ const AboutMe = () => {
               About Me
             </h2>
             <p className="text-white mb-6">
-              I'm Kenny, a cinematographer and creative director with over 10 years of experience crafting visual stories. My passion lies in capturing authentic moments and translating creative visions into compelling visual narratives.
+              I&apos;m Kenny, a cinematographer and creative director with over 10 years of experience crafting visual stories. My passion lies in capturing authentic moments and translating creative visions into compelling visual narratives.
             </p>
             <p className="text-white mb-6">
               With expertise in commercial filmmaking, music videos, and documentary work, I bring technical precision and artistic vision to every project. My approach combines innovative cinematography techniques with a deep understanding of storytelling to create visuals that resonate with audiences.
@@ -70,7 +67,7 @@ const AboutMe = () => {
               href="#contact" 
               className="inline-flex items-center text-[#ff6d00] hover:underline"
             >
-              LET'S WORK TOGETHER →
+              LET&apos;S WORK TOGETHER →
             </a>
           </motion.div>
           

@@ -14,3 +14,6 @@ path = ".next/cache/**"
 
 [[build.excludedFiles]]
 path = "cache/**"
+
+# For Pages deployment
+pages_build_output_dir = "out"

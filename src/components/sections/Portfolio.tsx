@@ -12,7 +12,7 @@ const organizeMediaAssets = () => {
   // Define project information
   const projectInfo = {
     '3221507813161477626': {
-      title: 'Fashion Campaign - "Elegance"',
+      title: 'Sounds of Lagos FASHION WEEK',
       category: 'Fashion',
       client: 'Luxury Brand',
       description: 'A visually striking fashion campaign showcasing elegance and style through creative cinematography and artistic direction.',
@@ -148,12 +148,15 @@ const organizeMediaAssets = () => {
   
   // Loop through project IDs
   Object.keys(projectInfo).forEach((projectId, index) => {
-    // Directly use Kenny images for thumbnails to ensure consistency
-    // This ensures thumbnails always load regardless of project media structure
+    // First try to use the first image in project's sequence as thumbnail
+    // If that fails, fall back to Kenny images
     const kennyImageIndex = (index % 14) + 1; // Cycle through Kenny images 1-14
-    const thumbnailPath = kennyImageIndex === 1 
+    const kennyThumbnailPath = kennyImageIndex === 1 
       ? '/Portfolio Assets/kenny_1_cover.jpg' 
       : `/Portfolio Assets/kenny_${kennyImageIndex}.jpg`;
+    
+    // Try to use the first image in the project's own sequence
+    const projectThumbnailPath = `/Portfolio Assets/${projectId}_1.jpg`;
     
     const defaultVideoPath = `/Portfolio Assets/${projectId}_1.mp4`;
     
@@ -165,8 +168,8 @@ const organizeMediaAssets = () => {
       category: projectInfo[projectId].category,
       client: projectInfo[projectId].client,
       videoSrc: defaultVideoPath,
-      thumbnail: thumbnailPath, // Use Kenny images as reliable thumbnails
-      fallbackThumbnail: '/Portfolio Assets/kenny_1_cover.jpg', // Fallback thumbnail
+      thumbnail: projectThumbnailPath, // Try to use project's first image
+      fallbackThumbnail: kennyThumbnailPath, // Fall back to Kenny images if needed
       description: projectInfo[projectId].description,
       date: projectInfo[projectId].date
     });
@@ -198,6 +201,21 @@ const Portfolio = () => {
     }
   }, [activeCategory]);
 
+  // Use filtered projects effect to check if images are loadable
+  useEffect(() => {
+    // Check if project thumbnails are loadable and update if needed
+    filteredProjects.forEach(project => {
+      const img = new Image();
+      img.src = project.thumbnail;
+      img.onload = () => {
+        console.log(`Project ${project.id} thumbnail loaded successfully: ${project.thumbnail}`);
+      };
+      img.onerror = () => {
+        console.log(`Project ${project.id} thumbnail failed to load, will use fallback: ${project.fallbackThumbnail}`);
+      };
+    });
+  }, [filteredProjects]);
+
   // Add mobile detection for better touch handling
   const [isMobile, setIsMobile] = useState(false);
   
@@ -225,6 +243,23 @@ const Portfolio = () => {
   useEffect(() => {
     console.log("isMobile state:", isMobile);
   }, [isMobile]);
+  
+  // Preload images to improve performance
+  useEffect(() => {
+    // Preload all project thumbnails when component mounts
+    const preloadImages = () => {
+      filteredProjects.forEach(project => {
+        // Preload primary thumbnail
+        const img = new Image();
+        img.src = project.thumbnail;
+        // Also preload fallback
+        const fallbackImg = new Image();
+        fallbackImg.src = project.fallbackThumbnail;
+      });
+    };
+    
+    preloadImages();
+  }, [filteredProjects]);
   
   // Handle portfolio component mounting
   useEffect(() => {
@@ -335,10 +370,18 @@ const Portfolio = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                   onError={(e) => {
-                    // If image fails to load, use the fallback
+                    // If project's own image fails to load, use the fallback Kenny image
                     const target = e.target as HTMLImageElement;
-                    console.log("Image failed to load:", target.src);
+                    console.log(`Image failed to load: ${target.src}, using fallback: ${project.fallbackThumbnail}`);
                     target.src = project.fallbackThumbnail;
+                    
+                    // Add error handler for fallback too
+                    target.onerror = () => {
+                      console.log("Fallback image also failed, using default backup");
+                      target.src = "/Portfolio Assets/kenny_1_cover.jpg";
+                      // Remove error handler to prevent potential infinite loop
+                      target.onerror = null;
+                    };
                   }}
                 />
               )}

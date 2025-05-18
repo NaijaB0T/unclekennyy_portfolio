@@ -1,0 +1,4 @@
+# Exclude Next.js build cache
+.next/cache/**
+cache/**
+.vercel/**

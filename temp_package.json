@@ -1,0 +1,8 @@
+"scripts": {
+    "dev": "next dev",
+    "build": "if exist .next rd /s /q .next && if exist cache rd /s /q cache && next build --debug",
+    "build:unix": "rm -rf .next && rm -rf cache && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "deploy": "npm run build && npx wrangler pages deploy .next"
+  },

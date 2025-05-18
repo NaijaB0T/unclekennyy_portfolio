@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "if exist .next rd /s /q .next && if exist cache rd /s /q cache && if exist out rd /s /q out && next build",
+    "build:unix": "rm -rf .next && rm -rf cache && rm -rf out && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "npm run build && npx wrangler pages deploy out"
   },
   "dependencies": {
     "framer-motion": "^12.12.1",

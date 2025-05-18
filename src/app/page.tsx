@@ -200,10 +200,10 @@ export default function Home() {
           <Header />
           <div className="main-content" ref={mainContentRef}>
             <Services />
-            <FeaturedVideo />
-            <Process />
+            {/* <Process /> */}
             <Portfolio />
-            <Awards />
+            <FeaturedVideo />
+            {/* <Awards /> */}
             <Testimonials />
             <Clients />
             <Facilities />

@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "rm -rf .next && rm -rf cache && rm -rf out && next build",
-    "build:windows": "if exist .next rd /s /q .next && if exist cache rd /s /q cache && if exist out rd /s /q out && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && npx wrangler pages deploy out"
+    "deploy": "npx wrangler pages deploy out"
   },
   "dependencies": {
     "framer-motion": "^12.12.1",

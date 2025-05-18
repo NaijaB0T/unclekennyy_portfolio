@@ -141,6 +141,7 @@ const organizeMediaAssets = () => {
     client: string;
     videoSrc: string;
     thumbnail: string;
+    fallbackThumbnail: string; // Added fallback thumbnail
     description: string;
     date: string;
   }[] = [];
@@ -165,6 +166,7 @@ const organizeMediaAssets = () => {
       client: projectInfo[projectId].client,
       videoSrc: defaultVideoPath,
       thumbnail: thumbnailPath, // Use Kenny images as reliable thumbnails
+      fallbackThumbnail: '/Portfolio Assets/kenny_1_cover.jpg', // Fallback thumbnail
       description: projectInfo[projectId].description,
       date: projectInfo[projectId].date
     });
@@ -181,7 +183,7 @@ const categories = ['All', 'Music Video', 'Commercial', 'Short Film', 'Documenta
 
 const Portfolio = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
   const [activeCategory, setActiveCategory] = useState('All');
   const [filteredProjects, setFilteredProjects] = useState(portfolioProjects);
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
@@ -196,18 +198,70 @@ const Portfolio = () => {
     }
   }, [activeCategory]);
 
+  // Add mobile detection for better touch handling
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    // Function to check if device is mobile
+    const checkIfMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
+    };
+    
+    // Check initially
+    checkIfMobile();
+    
+    // Add listener for window resize
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', checkIfMobile);
+      
+      // Clean up
+      return () => window.removeEventListener('resize', checkIfMobile);
+    }
+  }, []);
+  
+  // Debug mobile detection
+  useEffect(() => {
+    console.log("isMobile state:", isMobile);
+  }, [isMobile]);
+  
+  // Handle portfolio component mounting
+  useEffect(() => {
+    // Force a redraw on component mount to prevent initial render issues
+    setTimeout(() => {
+      if (sectionRef.current) {
+        console.log("Portfolio section redraw triggered");
+        const display = sectionRef.current.style.display;
+        sectionRef.current.style.display = 'none';
+        // Force a reflow
+        void sectionRef.current.offsetHeight;
+        sectionRef.current.style.display = display;
+      }
+    }, 500);
+
+    // Check if we have projects loaded and visible in the DOM
+    setTimeout(() => {
+      if (sectionRef.current) {
+        const projectItems = sectionRef.current.querySelectorAll('.project-item');
+        console.log(`Found ${projectItems.length} project items in the DOM`);
+      }
+    }, 1000);
+  }, []);
+
   return (
     <section 
       id="works" 
       ref={sectionRef}
-      className={`py-24 relative overflow-hidden ${
+      className={`py-24 relative overflow-hidden z-10 ${
         theme === 'dark' ? 'bg-black' : 'bg-white'
       }`}
+      style={{ minHeight: isMobile ? '500px' : 'auto' }}
     >
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={(isInView || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
           className="mb-12 text-center"
         >
@@ -224,7 +278,7 @@ const Portfolio = () => {
         {/* Category filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={(isInView || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-4 mb-12"
         >
@@ -245,23 +299,25 @@ const Portfolio = () => {
           ))}
         </motion.div>
         
-          {/* Portfolio grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Portfolio grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={(isInView || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-              className={`group relative overflow-hidden rounded-lg cursor-pointer shadow-lg ${
+              className={`project-item group relative overflow-hidden rounded-lg cursor-pointer shadow-lg h-[300px] ${
                 theme === 'dark' ? 'shadow-gray-900' : 'shadow-gray-200'
               }`}
-              style={{ height: '300px' }}
+              onClick={() => setSelectedProject(project.id)}
+              onTouchStart={() => setActiveProject(project.id)}
+              onTouchEnd={() => setActiveProject(null)}
               onMouseEnter={() => setActiveProject(project.id)}
               onMouseLeave={() => setActiveProject(null)}
-              onClick={() => setSelectedProject(project.id)}
             >
-              {activeProject === project.id && project.videoSrc ? (
+              {/* Always show images on mobile, videos only on desktop hover */}
+              {activeProject === project.id && project.videoSrc && !isMobile ? (
                 <video 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   autoPlay 
@@ -278,6 +334,12 @@ const Portfolio = () => {
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  onError={(e) => {
+                    // If image fails to load, use the fallback
+                    const target = e.target as HTMLImageElement;
+                    console.log("Image failed to load:", target.src);
+                    target.src = project.fallbackThumbnail;
+                  }}
                 />
               )}
               
@@ -286,18 +348,18 @@ const Portfolio = () => {
               
               {/* Content */}
               <div className="absolute bottom-0 left-0 p-6 w-full">
-                <div className="transform translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
+                <div className={`transform transition-transform duration-300 ${isMobile ? 'translate-y-0' : 'translate-y-4 group-hover:translate-y-0'}`}>
                   <span className="text-[#ff6d00] text-sm font-medium block mb-2">
                     {project.category}
                   </span>
                   <h3 className="text-white text-xl font-bold mb-1">
                     {project.title}
                   </h3>
-                  <p className="text-gray-300 text-sm mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className={`text-gray-300 text-sm mb-2 ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 transition-opacity duration-300'}`}>
                     Client: {project.client}
                   </p>
                   <button 
-                    className="inline-flex items-center text-[#ff6d00] text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:underline"
+                    className={`inline-flex items-center text-[#ff6d00] text-sm ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 transition-opacity duration-300'} hover:underline`}
                     onClick={() => setSelectedProject(project.id)}
                   >
                     View Project →
@@ -311,7 +373,7 @@ const Portfolio = () => {
         {/* View more button */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={(isInView || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-12"
         >

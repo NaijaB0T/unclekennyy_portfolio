@@ -55,7 +55,7 @@ const FeaturedVideo = () => {
             Featured Project
           </h2>
           <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-lg`}>
-            Our latest commercial project showcases our expertise in storytelling, cinematography, and visual effects. Experience the cinematic quality that defines our work.
+            My latest commercial project showcases my expertise in storytelling, cinematography, and visual effects. Experience the cinematic quality that defines my work.
           </p>
         </div>
         

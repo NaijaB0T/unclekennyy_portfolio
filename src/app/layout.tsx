@@ -22,6 +22,15 @@ export const metadata: Metadata = {
   authors: [{ name: "UncleKenny Studios" }],
   creator: "UncleKenny",
   publisher: "UncleKenny Studios",
+  icons: {
+    icon: [
+      { url: '/k-favicon.svg', type: 'image/svg+xml' },
+      { url: '/k-favicon-transparent.svg', type: 'image/svg+xml' },
+      { url: '/k-favicon-32.svg', type: 'image/svg+xml', sizes: '32x32' }
+    ],
+    apple: '/k-favicon.svg',
+    shortcut: '/k-favicon.svg'
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

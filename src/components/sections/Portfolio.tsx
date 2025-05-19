@@ -43,7 +43,7 @@ const organizeMediaAssets = () => {
       title: 'Commercial - "Premium Experience"',
       category: 'Commercial',
       client: 'Lifestyle Brand',
-      description: 'A high-end commercial production highlighting the luxury features and exceptional quality of our client\'s premium product line.',
+      description: 'A high-end commercial production highlighting the luxury features and exceptional quality of my client\'s premium product line.',
       date: 'January 2024'
     },
     '3389741723890159116': {
@@ -117,10 +117,10 @@ const organizeMediaAssets = () => {
       date: 'March 2023'
     },
     '3628041593085698121': {
-      title: 'Music Video - "Visual Rhythms"',
-      category: 'Music Video',
-      client: 'Recording Artist',
-      description: 'A creative music video that pushes visual boundaries while complementing the artist\'s musical expression through innovative cinematography.',
+      title: 'Google for Startups',
+      category: 'Commercial',
+      client: 'Google',
+      description: 'A creative commericial that pushes visual boundaries through innovative cinematography.',
       date: 'February 2023'
     },
     '3632937126791138218': {
@@ -302,11 +302,11 @@ const Portfolio = () => {
         >
           <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${
             theme === 'dark' ? 'text-white' : 'text-black'
-          }`}>Our Work</h2>
+          }`}>My Work</h2>
           <p className={`${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
           } max-w-2xl mx-auto`}>
-            Explore our diverse portfolio of projects across various genres and formats. Each piece represents our commitment to storytelling and visual excellence.
+            Explore my diverse portfolio of projects across various genres and formats. Each piece represents my commitment to storytelling and visual excellence.
           </p>
         </motion.div>
         
@@ -438,7 +438,7 @@ const Portfolio = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-90"
+            className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 pb-4 bg-black bg-opacity-90 overflow-y-auto"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
@@ -448,19 +448,24 @@ const Portfolio = () => {
               transition={{ duration: 0.3 }}
               className={`relative w-full max-w-5xl rounded-xl overflow-hidden ${
                 theme === 'dark' ? 'bg-gray-900' : 'bg-white'
-              } max-h-[90vh] overflow-y-auto`}
+              } max-h-[90vh] overflow-y-auto mt-16`}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close button */}
-              <button
-                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black bg-opacity-60 text-white flex items-center justify-center"
-                onClick={() => setSelectedProject(null)}
-              >
-                ✕
-              </button>
-              
               {selectedProject && (
                 <div>
+                  {/* Navigation and close controls in a separate bar above video */}
+                  <div className={`sticky top-0 z-50 flex justify-end items-center p-4 ${
+                    theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
+                  } border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
+                    <button
+                      className="w-10 h-10 rounded-full bg-[#ff6d00] text-white flex items-center justify-center hover:bg-[#ff8c3f] transition-colors"
+                      onClick={() => setSelectedProject(null)}
+                      aria-label="Close modal"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  
                   {/* Main Video */}
                   <div className="w-full aspect-video">
                     <VideoPlayer 
@@ -580,13 +585,21 @@ const Portfolio = () => {
                       }`}>
                         Client: {portfolioProjects.find(p => p.id === selectedProject)?.client}
                       </p>
-                      <a 
-                        href="#contact" 
-                        className="btn-primary"
-                        onClick={() => setSelectedProject(null)}
-                      >
-                        Start Your Project →
-                      </a>
+                      <div className="flex items-center gap-4">
+                        <button 
+                          className="px-4 py-2 rounded-full border border-gray-500 text-gray-300 hover:bg-gray-800 transition-colors"
+                          onClick={() => setSelectedProject(null)}
+                        >
+                          Close
+                        </button>
+                        <a 
+                          href="#contact" 
+                          className="btn-primary"
+                          onClick={() => setSelectedProject(null)}
+                        >
+                          Start Your Project →
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -25,7 +25,7 @@ const testimonials = [
     id: 3,
     name: 'Olivia Rodriguez',
     role: 'Product Marketing Manager',
-    quote: 'The commercial UncleKenny created for our product launch exceeded all expectations. They have an exceptional ability to find the perfect visual language for any brand. The results were stunning and impactful.',
+    quote: 'The commercial UncleKenny created for our product launch exceeded all expectations. He has an exceptional ability to find the perfect visual language for any brand. The results were stunning and impactful.',
     image: '/Portfolio Assets/kenny_4.jpg'
   }
 ];
@@ -127,7 +127,7 @@ const Testimonials = () => {
             Client <span className="text-[#ff6d00]">Testimonials</span>
           </h2>
           <p className={`max-w-2xl mx-auto ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-            Hear what our clients have to say about their experience working with UncleKenny Studios
+            Hear what clients have to say about their experience working with UncleKenny
           </p>
         </motion.div>
         

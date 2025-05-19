@@ -1,0 +1,48 @@
+// SVG can be used directly as a favicon in modern browsers
+// This HTML file will help us create a proper favicon.ico
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Favicon Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .instructions {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    img {
+      display: block;
+      margin: 20px 0;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Favicon Generator Instructions</h1>
+  
+  <div class="instructions">
+    <p>To create a proper favicon.ico file:</p>
+    <ol>
+      <li>Use a favicon generator service like <a href="https://favicon.io/favicon-converter/" target="_blank">favicon.io</a> or <a href="https://realfavicongenerator.net/" target="_blank">realfavicongenerator.net</a></li>
+      <li>Upload the SVG file we've created</li>
+      <li>Download the generated favicon package</li>
+      <li>Place the favicon.ico file in the public folder of your Next.js project</li>
+    </ol>
+  </div>
+  
+  <h2>Preview of the SVG Favicon:</h2>
+  <img src="k-favicon.svg" alt="K Favicon" width="128" height="128">
+  <img src="k-favicon-transparent.svg" alt="K Favicon Transparent" width="128" height="128">
+  
+  <h2>Temporary Solution</h2>
+  <p>For now, you can use the SVG directly as a favicon in the layout.tsx file. Modern browsers support SVG favicons.</p>
+</body>
+</html>

@@ -23,7 +23,7 @@ const Clients = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-              We collaborate with <span className="text-[#ff6d00]">leading</span> companies
+              I collaborate with <span className="text-[#ff6d00]">leading</span> companies
             </h2>
           </motion.div>
           
@@ -34,7 +34,7 @@ const Clients = () => {
             className="flex flex-col space-y-6"
           >
             <p className="text-white">
-              Our <span className="text-[#ff6d00]">Clients</span>: Our Success. From <span className="text-[#ff6d00]">startups</span> to industry <span className="text-[#ff6d00]">leaders</span>, we help brands tell their stories and connect with their audience.
+              My <span className="text-[#ff6d00]">Clients</span>: My Success. From <span className="text-[#ff6d00]">startups</span> to industry <span className="text-[#ff6d00]">leaders</span>, I help brands tell their stories and connect with their audience.
             </p>
             <a href="#contact" className="text-[#ff6d00] inline-flex items-center hover:underline">
               LET&apos;S CREATE →

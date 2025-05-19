@@ -8,31 +8,31 @@ const serviceData = [
   {
     id: 1,
     title: 'Video Production',
-    description: 'From concept to final cut, we create stunning video content that tells your story with impact. Our team handles every aspect of production with meticulous attention to detail.',
+    description: 'From concept to final cut, I create stunning video content that tells your story with impact. Our team handles every aspect of production with meticulous attention to detail.',
     thumbnail: '/Portfolio Assets/kenny_1_cover.jpg',
   },
   {
     id: 2,
     title: 'Music Videos',
-    description: 'We specialize in crafting visually compelling music videos that elevate artists and captivate audiences, combining creative direction with technical excellence.',
+    description: 'I specialize in crafting visually compelling music videos that elevate artists and captivate audiences, combining creative direction with technical excellence.',
     thumbnail: '/Portfolio Assets/kenny_2.jpg',
   },
-  {
-    id: 3,
-    title: '3D & CGI',
-    description: 'Our cutting-edge 3D and CGI capabilities allow us to create immersive visual experiences that blur the line between reality and imagination.',
-    thumbnail: '/Portfolio Assets/kenny_3.jpg',
-  },
+  // {
+  //   id: 3,
+  //   title: '3D & CGI',
+  //   description: 'Our cutting-edge 3D and CGI capabilities allow us to create immersive visual experiences that blur the line betIen reality and imagination.',
+  //   thumbnail: '/Portfolio Assets/kenny_3.jpg',
+  // },
   {
     id: 4,
     title: 'Commercial Production',
-    description: 'We create compelling commercial content that resonates with your target audience and drives measurable results for your brand.',
+    description: 'I create compelling commercial content that resonates with your target audience and drives measurable results for your brand.',
     thumbnail: '/Portfolio Assets/kenny_4.jpg',
   },
   {
     id: 5,
     title: 'Photography',
-    description: 'Our photography services capture the essence of your brand, product, or event with a distinct cinematic approach that sets your visuals apart.',
+    description: 'My photography services capture the essence of your brand, product, or event with a distinct cinematic approach that sets your visuals apart.',
     thumbnail: '/Portfolio Assets/kenny_5.jpg',
   }
 ].map(service => ({
@@ -140,7 +140,7 @@ const Services = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left column (sticky) */}
           <div className="lg:sticky lg:top-32 lg:h-[calc(100vh-15rem)]">
-            <h2 className="text-[#ff6d00] text-4xl md:text-5xl font-bold mb-8">OUR SERVICES</h2>
+            <h2 className="text-[#ff6d00] text-4xl md:text-5xl font-bold mb-8">MY SERVICES</h2>
             <div className="h-1 w-16 bg-[#ff6d00] mb-8"></div>
             <div className="max-w-lg space-y-4 relative h-32"> {/* Fixed height for text container */}
               <p 
@@ -210,7 +210,7 @@ const Services = () => {
                   <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                     {service.title}
                   </h3>
-                  <a className="text-[#ff6d00] text-sm inline-flex items-center">
+                  <a href='#contact' className="text-[#ff6d00] text-sm inline-flex items-center">
                     LEARN MORE →
                   </a>
                 </div>

@@ -86,7 +86,10 @@ export default function Home() {
     }, 500);
   };
   
-  // Handle scroll to detect reverse transition trigger
+  // State for hero return hint
+  const [showHeroReturnHint, setShowHeroReturnHint] = useState(false);
+  
+  // Handle scroll to detect reverse transition trigger and scroll position for hints
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -97,6 +100,16 @@ export default function Home() {
         if (currentScrollY === 0 && lastScrollY.current > 10) {
           console.log(`Attempting reverse: current=${currentScrollY}, last=${lastScrollY.current}`);
           handleReverseTransition();
+        }
+        
+        // Show return to hero hint only when near services section and scrolling up
+        const servicesThreshold = 1900; // Adjust this threshold based on your layout
+        const isScrollingUp = currentScrollY < lastScrollY.current;
+        
+        if (currentScrollY < servicesThreshold && currentScrollY > 10 && isScrollingUp) {
+          setShowHeroReturnHint(true);
+        } else {
+          setShowHeroReturnHint(false);
         }
       }
       
@@ -221,10 +234,12 @@ export default function Home() {
             />
           )}
           
-          {/* Back to hero hint */}
-          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded text-xs z-50">
-            Scroll up at the top to return to hero
-          </div>
+          {/* Conditional back to hero hint that only appears when scrolling near services section */}
+          {showHeroReturnHint && (
+            <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded text-sm z-50 transition-opacity duration-300">
+              Scroll up at the top to return to hero
+            </div>
+          )}
         </>
       )}
     </main>
